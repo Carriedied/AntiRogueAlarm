@@ -7,32 +7,29 @@ public class Rogue : MonoBehaviour
     [SerializeField] private float _stopDistance = 0f;
     [SerializeField] private float _speed = 5f;
 
-    public bool IsAlarmPlaying { get; private set; }
-
-    public Animator animator;
+    private Animator animator;
 
     private int _currentWaypoint = 0;
     private int _numberWaypointEntranceHouse = 2;
     private int _numberWaypointInitialPoint = 0;
     private bool _isInsideHouse = false;
+    private bool _isAlarmPlaying = false;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-
-        IsAlarmPlaying = false;
     }
 
     private void Update()
     {
         transform.LookAt(_waypoints[_currentWaypoint]);
 
-        if (_isInsideHouse == false && IsAlarmPlaying == false)
+        if (_isInsideHouse == false && _isAlarmPlaying == false)
         {
             RunToHouse();
         }
 
-        if (IsAlarmPlaying == true && (TryDistanceSuitable(_waypoints[_numberWaypointInitialPoint])) == false)
+        if (_isAlarmPlaying == true && (TryDistanceSuitable(_waypoints[_numberWaypointInitialPoint])) == false)
         {
             RunAwayHouse();
         }
@@ -40,7 +37,7 @@ public class Rogue : MonoBehaviour
 
     public void HearAlarm()
     {
-        IsAlarmPlaying = true;
+        _isAlarmPlaying = true;
     }
 
     private void RunAwayHouse()

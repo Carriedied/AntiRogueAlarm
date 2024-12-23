@@ -1,16 +1,24 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class TriggerZone : MonoBehaviour
 {
-    public event Action OnBurglarEnter;
+    [SerializeField] private TriggerAlarm alarm;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Thief"))
+        OperationAlarm(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        OperationAlarm(other);
+    }
+
+    private void OperationAlarm(Collider other)
+    {
+        if (other.TryGetComponent<Rogue>(out Rogue thief))
         {
-            OnBurglarEnter?.Invoke();
+            alarm.TurnAlarm(thief);
         }
     }
 }
