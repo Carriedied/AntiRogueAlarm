@@ -5,39 +5,36 @@ using UnityEngine;
 public class TriggerAlarm : MonoBehaviour
 {
     [SerializeField] private TriggerZone _house;
-    [SerializeField] private float _fadeDuration = 5f;
-    [SerializeField] private float _maxVolume = 1f;
-    [SerializeField] private float _minVolume = 0f;
+    [SerializeField] private float _fadeDuration;
 
     private AudioSource _alarmSound;
+    private Coroutine _fadeVolumeCoroutine;
 
-    private bool _isAlarmPlaying = false;
+    private float _maxVolume = 1f;
+    private float _minVolume = 0f;
 
     private void Awake()
     {
         _alarmSound = GetComponent<AudioSource>();
-
-        _alarmSound.volume = _minVolume;
     }
 
     public void TurnAlarm(Rogue thief)
     {
-        if (_isAlarmPlaying == true)
-        {
-            StartCoroutine(DecreaseVolume());
-
-            _isAlarmPlaying = false;
-
-            return;
-        }
-
         _alarmSound.Play();
 
-        _isAlarmPlaying = true;
-
-        StartCoroutine(FadeVolume());
+        _fadeVolumeCoroutine = StartCoroutine(FadeVolume());
 
         thief.HearAlarm();
+    }
+
+    public void TurnOffAlarm()
+    {
+        if (_fadeVolumeCoroutine != null)
+        {
+            StopCoroutine(_fadeVolumeCoroutine);
+        }
+
+        StartCoroutine(DecreaseVolume());
     }
 
     private IEnumerator FadeVolume()
@@ -52,8 +49,6 @@ public class TriggerAlarm : MonoBehaviour
 
             yield return null;
         }
-
-        _alarmSound.volume = _maxVolume;
     }
 
     private IEnumerator DecreaseVolume()
@@ -68,8 +63,6 @@ public class TriggerAlarm : MonoBehaviour
 
             yield return null;
         }
-
-        _alarmSound.volume = _minVolume;
 
         _alarmSound.Stop();
     }

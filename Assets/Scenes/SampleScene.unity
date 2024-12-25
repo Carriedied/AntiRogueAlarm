@@ -886,19 +886,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6372885786248119872, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: _fadeDuration
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: m_Volume
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: MaxDistance
-      value: 15
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: rolloffMode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: rolloffCustomCurve.m_Curve.Array.size
@@ -914,19 +914,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].time
-      value: 1
+      value: 0.91096497
       objectReference: {fileID: 0}
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].time
-      value: 1
+      value: 0.8972626
       objectReference: {fileID: 0}
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[1].time
       value: 0.993042
       objectReference: {fileID: 0}
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].value
-      value: 0
+      value: 0.6416626
       objectReference: {fileID: 0}
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[1].value
@@ -968,8 +972,32 @@ PrefabInstance:
       propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[0].value
       value: 1.0964088
       objectReference: {fileID: 0}
+    - target: {fileID: 7627621307963268120, guid: 738898561e016b844ae772c731ad8224, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627621307963268120, guid: 738898561e016b844ae772c731ad8224, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627621307963268120, guid: 738898561e016b844ae772c731ad8224, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627621307963268120, guid: 738898561e016b844ae772c731ad8224, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627621307963268120, guid: 738898561e016b844ae772c731ad8224, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9115017709053691983, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: alarm
+      value: 
+      objectReference: {fileID: 2104722905}
+    - target: {fileID: 9115017709053691983, guid: 738898561e016b844ae772c731ad8224, type: 3}
+      propertyPath: _alarm
       value: 
       objectReference: {fileID: 2104722905}
     m_RemovedComponents: []

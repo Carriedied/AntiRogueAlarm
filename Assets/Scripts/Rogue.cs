@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -14,6 +15,7 @@ public class Rogue : MonoBehaviour
     private int _numberWaypointInitialPoint = 0;
     private bool _isInsideHouse = false;
     private bool _isAlarmPlaying = false;
+    private float _amountTimeLookAround = 2f;
 
     private void Awake()
     {
@@ -37,6 +39,13 @@ public class Rogue : MonoBehaviour
 
     public void HearAlarm()
     {
+        StartCoroutine(LookAround(_amountTimeLookAround));
+    }
+
+    private IEnumerator LookAround(float timeLookAround)
+    {
+        yield return new WaitForSeconds(timeLookAround);
+
         _isAlarmPlaying = true;
     }
 
