@@ -1,43 +1,63 @@
 using System.Collections;
 using UnityEngine;
 
+public enum RogueState
+{
+    Outside,
+    Inside,
+    Alarmed,
+    RanAway
+}
+
 [RequireComponent(typeof(Animator))]
 public class Rogue : MonoBehaviour
 {
     [SerializeField] private Transform[] _waypoints;
-    [SerializeField] private float _stopDistance = 0f;
     [SerializeField] private float _speed = 5f;
 
-    private Animator animator;
+    private Animator _animator;
+    private RogueState _currentState = RogueState.Outside;
 
     private int _currentWaypoint = 0;
-    private int _numberWaypointEntranceHouse = 2;
     private int _numberWaypointInitialPoint = 0;
-    private bool _isInsideHouse = false;
-    private bool _isAlarmPlaying = false;
     private float _amountTimeLookAround = 2f;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        switch (_currentState)
+        {
+            case RogueState.Outside:
+                RunToHouse();
+                break;
+            case RogueState.Inside:
+                break;
+            case RogueState.Alarmed:
+                RunAwayHouse();
+                break;
+            case RogueState.RanAway:
+                _animator.SetBool("isMoveToWaypoint", false);
+                break;
+        }
+
         transform.LookAt(_waypoints[_currentWaypoint]);
-
-        if (_isInsideHouse == false && _isAlarmPlaying == false)
-        {
-            RunToHouse();
-        }
-
-        if (_isAlarmPlaying == true && (TryDistanceSuitable(_waypoints[_numberWaypointInitialPoint])) == false)
-        {
-            RunAwayHouse();
-        }
     }
 
-    public void HearAlarm()
+    public void SubscribeToAlarm(TriggerAlarm alarm)
+    {
+        alarm.OnAlarmTriggered += HearAlarm;
+    }
+
+    public void UnsubscribeFromAlarm(TriggerAlarm alarm)
+    {
+        alarm.OnAlarmTriggered -= HearAlarm;
+    }
+
+    private void HearAlarm()
     {
         StartCoroutine(LookAround(_amountTimeLookAround));
     }
@@ -46,51 +66,41 @@ public class Rogue : MonoBehaviour
     {
         yield return new WaitForSeconds(timeLookAround);
 
-        _isAlarmPlaying = true;
+        _currentState = RogueState.Alarmed;
     }
 
     private void RunAwayHouse()
     {
-        if (TryDistanceSuitable(_waypoints[_currentWaypoint]))
+        if (transform.position == _waypoints[_currentWaypoint].transform.position)
         {
             _currentWaypoint--;
+
+            if (_currentWaypoint == _numberWaypointInitialPoint)
+            {
+                _currentState = RogueState.RanAway;
+            }
         }
 
         Run();
-
-        if (TryDistanceSuitable(_waypoints[_numberWaypointEntranceHouse]))
-        {
-            _isInsideHouse = false;
-        }
-
-        if (TryDistanceSuitable(_waypoints[_numberWaypointInitialPoint]))
-        {
-            animator.SetBool("isMoveToWaypoint", false);
-        }
     }
 
     private void RunToHouse()
     {
-        if (TryDistanceSuitable(_waypoints[_currentWaypoint]))
+        if (transform.position == _waypoints[_currentWaypoint].transform.position)
         {
             _currentWaypoint++;
         }
 
         Run();
 
-        if (TryDistanceSuitable(_waypoints[_waypoints.Length - 1]))
+        if (transform.position == _waypoints[_waypoints.Length - 1].transform.position)
         {
-            _isInsideHouse = true;
+            _currentState = RogueState.Inside;
         }
     }
 
     private void Run()
     {
         transform.position = Vector3.MoveTowards(transform.position, _waypoints[_currentWaypoint].position, _speed * Time.deltaTime);
-    }
-
-    private bool TryDistanceSuitable(Transform target)
-    {
-        return Vector3.Distance(transform.position, target.position) <= _stopDistance;
     }
 }

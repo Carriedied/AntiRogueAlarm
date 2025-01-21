@@ -8,7 +8,8 @@ public class TriggerZone : MonoBehaviour
     {
         if (other.TryGetComponent(out Rogue thief))
         {
-            _alarm.TurnAlarm(thief);
+            thief.SubscribeToAlarm(_alarm);
+            _alarm.TurnAlarm();
         }
     }
 
@@ -16,6 +17,7 @@ public class TriggerZone : MonoBehaviour
     {
         if (other.TryGetComponent(out Rogue thief))
         {
+            thief.UnsubscribeFromAlarm(_alarm);
             _alarm.TurnOffAlarm();
         }
     }
