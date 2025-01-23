@@ -9,7 +9,7 @@ public class TriggerAlarm : MonoBehaviour
     [SerializeField] private float _fadeDuration;
 
     private AudioSource _alarmSound;
-    private Coroutine _fadeVolumeCoroutine;
+    private Coroutine _ChangeVolumeCoroutine;
     public event Action OnAlarmTriggered;
 
     private float _maxVolume = 1f;
@@ -24,21 +24,24 @@ public class TriggerAlarm : MonoBehaviour
     {
         _alarmSound.Play();
 
-        _fadeVolumeCoroutine = StartCoroutine(ChangeVolume(_minVolume, _maxVolume));
+        if (_ChangeVolumeCoroutine != null)
+        {
+            StopCoroutine(_ChangeVolumeCoroutine);
+        }
+
+        _ChangeVolumeCoroutine = StartCoroutine(ChangeVolume(_minVolume, _maxVolume));
 
         OnAlarmTriggered?.Invoke();
     }
 
     public void TurnOffAlarm()
     {
-        if (_fadeVolumeCoroutine != null)
+        if (_ChangeVolumeCoroutine != null)
         {
-            StopCoroutine(_fadeVolumeCoroutine);
+            StopCoroutine(_ChangeVolumeCoroutine);
         }
 
         StartCoroutine(ChangeVolume(_maxVolume, _minVolume));
-
-        _alarmSound.Stop();
     }
 
     private IEnumerator ChangeVolume(float initialVolume, float finalVolume)

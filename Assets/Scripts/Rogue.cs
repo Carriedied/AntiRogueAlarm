@@ -15,16 +15,20 @@ public class Rogue : MonoBehaviour
     [SerializeField] private Transform[] _waypoints;
     [SerializeField] private float _speed = 5f;
 
+    private static readonly int IsMoveToWaypoint = Animator.StringToHash("isMoveToWaypoint");
+
     private Animator _animator;
     private RogueState _currentState = RogueState.Outside;
+    private WaitForSeconds _waitTime = new WaitForSeconds(2f);
 
+    private int _numberLastElementWaypoints;
     private int _currentWaypoint = 0;
     private int _numberWaypointInitialPoint = 0;
-    private float _amountTimeLookAround = 2f;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _numberLastElementWaypoints = _waypoints.Length - 1;
     }
 
     private void Update()
@@ -34,13 +38,16 @@ public class Rogue : MonoBehaviour
             case RogueState.Outside:
                 RunToHouse();
                 break;
+
             case RogueState.Inside:
                 break;
+
             case RogueState.Alarmed:
                 RunAwayHouse();
                 break;
+
             case RogueState.RanAway:
-                _animator.SetBool("isMoveToWaypoint", false);
+                _animator.SetBool(IsMoveToWaypoint, false);
                 break;
         }
 
@@ -59,12 +66,12 @@ public class Rogue : MonoBehaviour
 
     private void HearAlarm()
     {
-        StartCoroutine(LookAround(_amountTimeLookAround));
+        StartCoroutine(LookAround());
     }
 
-    private IEnumerator LookAround(float timeLookAround)
+    private IEnumerator LookAround()
     {
-        yield return new WaitForSeconds(timeLookAround);
+        yield return _waitTime;
 
         _currentState = RogueState.Alarmed;
     }
@@ -73,27 +80,28 @@ public class Rogue : MonoBehaviour
     {
         if (transform.position == _waypoints[_currentWaypoint].transform.position)
         {
-            _currentWaypoint--;
-
-            if (_currentWaypoint == _numberWaypointInitialPoint)
-            {
-                _currentState = RogueState.RanAway;
-            }
+            _currentWaypoint++;
+            _currentWaypoint %= _waypoints.Length;
         }
 
         Run();
+
+        if (transform.position == _waypoints[_numberWaypointInitialPoint].position)
+        {
+            _currentState = RogueState.RanAway;
+        }
     }
 
     private void RunToHouse()
     {
-        if (transform.position == _waypoints[_currentWaypoint].transform.position)
+        if (transform.position == _waypoints[_currentWaypoint].position)
         {
             _currentWaypoint++;
         }
 
         Run();
 
-        if (transform.position == _waypoints[_waypoints.Length - 1].transform.position)
+        if (transform.position == _waypoints[_numberLastElementWaypoints].position)
         {
             _currentState = RogueState.Inside;
         }

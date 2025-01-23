@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 77493862}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.44, y: 0, z: 6.06}
+  m_LocalPosition: {x: 11.008, y: 0.000000029802322, z: 7.42464}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -175,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 591640075}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.48, y: 0.37, z: -2.45}
+  m_LocalPosition: {x: 7.319, y: 0.297, z: -2.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -417,7 +417,7 @@ Transform:
   m_GameObject: {fileID: 999014920}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.643698, y: 0.5, z: 2.3599062}
+  m_LocalPosition: {x: -10.08676, y: 0.5, z: 1.8185798}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -453,7 +453,6 @@ MonoBehaviour:
   - {fileID: 1720005062}
   - {fileID: 1908343107}
   - {fileID: 795903346}
-  _stopDistance: 0.1
   _speed: 5
 --- !u!65 &1069638424
 BoxCollider:
@@ -971,6 +970,10 @@ PrefabInstance:
     - target: {fileID: 6563673259455543545, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[0].value
       value: 1.0964088
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396961819893193597, guid: 738898561e016b844ae772c731ad8224, type: 3}
+      propertyPath: m_Convex
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7627621307963268120, guid: 738898561e016b844ae772c731ad8224, type: 3}
       propertyPath: m_LocalScale.x
