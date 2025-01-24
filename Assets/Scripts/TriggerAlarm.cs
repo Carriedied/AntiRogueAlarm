@@ -8,37 +8,37 @@ public class TriggerAlarm : MonoBehaviour
     [SerializeField] private TriggerZone _house;
     [SerializeField] private float _fadeDuration;
 
-    private AudioSource _alarmSound;
-    private Coroutine _ChangeVolumeCoroutine;
-    public event Action OnAlarmTriggered;
+    public event Action SignalingTriggering;
+    private AudioSource _signalingSound;
+    private Coroutine _changeVolumeCoroutine;
 
     private float _maxVolume = 1f;
     private float _minVolume = 0f;
 
     private void Awake()
     {
-        _alarmSound = GetComponent<AudioSource>();
+        _signalingSound = GetComponent<AudioSource>();
     }
 
-    public void TurnAlarm()
+    public void TurnSignaling()
     {
-        _alarmSound.Play();
+        _signalingSound.Play();
 
-        if (_ChangeVolumeCoroutine != null)
+        if (_changeVolumeCoroutine != null)
         {
-            StopCoroutine(_ChangeVolumeCoroutine);
+            StopCoroutine(_changeVolumeCoroutine);
         }
 
-        _ChangeVolumeCoroutine = StartCoroutine(ChangeVolume(_minVolume, _maxVolume));
+        _changeVolumeCoroutine = StartCoroutine(ChangeVolume(_minVolume, _maxVolume));
 
-        OnAlarmTriggered?.Invoke();
+        SignalingTriggering?.Invoke();
     }
 
-    public void TurnOffAlarm()
+    public void TurnOffSignaling()
     {
-        if (_ChangeVolumeCoroutine != null)
+        if (_changeVolumeCoroutine != null)
         {
-            StopCoroutine(_ChangeVolumeCoroutine);
+            StopCoroutine(_changeVolumeCoroutine);
         }
 
         StartCoroutine(ChangeVolume(_maxVolume, _minVolume));
@@ -52,7 +52,7 @@ public class TriggerAlarm : MonoBehaviour
         {
             currentTime += Time.deltaTime;
 
-            _alarmSound.volume = Mathf.Lerp(initialVolume, finalVolume, currentTime / _fadeDuration);
+            _signalingSound.volume = Mathf.Lerp(initialVolume, finalVolume, currentTime / _fadeDuration);
 
             yield return null;
         }

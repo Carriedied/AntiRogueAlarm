@@ -1,21 +1,12 @@
+using Assets.Scripts;
 using System.Collections;
 using UnityEngine;
-
-public enum RogueState
-{
-    Outside,
-    Inside,
-    Alarmed,
-    RanAway
-}
 
 [RequireComponent(typeof(Animator))]
 public class Rogue : MonoBehaviour
 {
     [SerializeField] private Transform[] _waypoints;
     [SerializeField] private float _speed = 5f;
-
-    private static readonly int IsMoveToWaypoint = Animator.StringToHash("isMoveToWaypoint");
 
     private Animator _animator;
     private RogueState _currentState = RogueState.Outside;
@@ -39,15 +30,12 @@ public class Rogue : MonoBehaviour
                 RunToHouse();
                 break;
 
-            case RogueState.Inside:
-                break;
-
             case RogueState.Alarmed:
                 RunAwayHouse();
                 break;
 
             case RogueState.RanAway:
-                _animator.SetBool(IsMoveToWaypoint, false);
+                _animator.SetBool(PlayerAnimator.Params.IsMoveToWaypoint, false);
                 break;
         }
 
@@ -56,12 +44,12 @@ public class Rogue : MonoBehaviour
 
     public void SubscribeToAlarm(TriggerAlarm alarm)
     {
-        alarm.OnAlarmTriggered += HearAlarm;
+        alarm.SignalingTriggering += HearAlarm;
     }
 
     public void UnsubscribeFromAlarm(TriggerAlarm alarm)
     {
-        alarm.OnAlarmTriggered -= HearAlarm;
+        alarm.SignalingTriggering -= HearAlarm;
     }
 
     private void HearAlarm()
