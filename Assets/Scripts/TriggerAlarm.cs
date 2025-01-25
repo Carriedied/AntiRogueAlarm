@@ -53,7 +53,7 @@ public class TriggerAlarm : MonoBehaviour
         {
             currentTime += Time.deltaTime;
 
-            _signalingSound.volume = Mathf.Lerp(_signalingSound.volume, finalVolume, currentTime);
+            _signalingSound.volume = Mathf.Lerp(_signalingSound.volume, finalVolume, currentTime / _fadeDuration);
             
             yield return null;
         }
