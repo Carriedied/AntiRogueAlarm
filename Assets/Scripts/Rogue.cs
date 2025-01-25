@@ -44,12 +44,12 @@ public class Rogue : MonoBehaviour
 
     public void SubscribeToAlarm(TriggerAlarm alarm)
     {
-        alarm.SignalingTriggering += HearAlarm;
+        alarm.SignalingTriggered += HearAlarm;
     }
 
     public void UnsubscribeFromAlarm(TriggerAlarm alarm)
     {
-        alarm.SignalingTriggering -= HearAlarm;
+        alarm.SignalingTriggered -= HearAlarm;
     }
 
     private void HearAlarm()
