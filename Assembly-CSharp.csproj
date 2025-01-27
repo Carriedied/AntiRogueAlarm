@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\TriggerZone.cs" />
     <Compile Include="Assets\Scripts\Rogue.cs" />
-    <Compile Include="Assets\Scripts\ThiefCondition.cs" />
     <Compile Include="Assets\Scripts\TriggerAlarm.cs" />
     <Compile Include="Assets\Scripts\PlayerAnimator.cs" />
   </ItemGroup>

@@ -5,8 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class TriggerAlarm : MonoBehaviour
 {
-    public event Action SignalingTriggered;
-
     [SerializeField] private TriggerZone _house;
     [SerializeField] private float _fadeDuration;
 
@@ -15,6 +13,8 @@ public class TriggerAlarm : MonoBehaviour
 
     private float _maxVolume = 1f;
     private float _minVolume = 0f;
+
+    public event Action SignalingTriggered;
 
     private void Awake()
     {
@@ -53,7 +53,7 @@ public class TriggerAlarm : MonoBehaviour
         {
             currentTime += Time.deltaTime;
 
-            _signalingSound.volume = Mathf.Lerp(_signalingSound.volume, finalVolume, currentTime / _fadeDuration);
+            _signalingSound.volume = Mathf.Lerp(_signalingSound.volume, finalVolume, currentTime);
             
             yield return null;
         }
